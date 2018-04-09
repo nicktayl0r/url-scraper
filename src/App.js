@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
+
+
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      article: ""
+    }
+  }
+  acquireContent = () => {
+    console.log('hello')
+    this.setState(({article: this.state.article+ 1}))
+  }
+  componentDidMount() {
+    console.log('Compnent has mounted');
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <h1>Welcome, Please enter the URL of a web article to begin</h1>
+        
+        
+          <input type="text"/>
+          <input onClick={() => this.acquireContent()} type="submit" value="Submit"></input>  
+        
+        <div>
+          {this.state.article}
+        </div>
+
       </div>
     );
   }
