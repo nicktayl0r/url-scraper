@@ -8,13 +8,14 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      data: "null"
+      data: "null",
+      paragraphs: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
+  
   handleChange(event) {
     this.setState({data: event.target.value});
   }
@@ -29,10 +30,17 @@ class App extends Component {
            let response = xhr.responseText;
            let el = document.createElement('html');
            el.innerHTML = response;
-           
-           let component = el.getElementsByTagName('p');
-           console.dir(component);
-            // component.innerHTML = xhr.responseText;
+           let paragEl = el.getElementsByTagName('p');
+           let textArray = [];
+           for(let p in paragEl) {
+             if(paragEl[p].innerText){
+               textArray.push(paragEl[p].innerText);
+             }
+           }
+
+           this.setState({paragraphs: textArray})
+           console.dir(textArray)
+            
         }
         xhr.send();
     }
@@ -54,9 +62,11 @@ class App extends Component {
           <input onChange={this.handleChange} type="text"/>
           <input type="submit" value="Submit"></input>  
         </form>
-
-        
-
+        <div className="ptags">
+          {this.state.paragraphs.map(function(name, index){
+                    return <div className="ptags__elem" key={ index }>{name}</div>;
+           })}
+        </div>
       </div>
     );
   }
