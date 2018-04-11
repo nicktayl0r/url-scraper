@@ -15,32 +15,35 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  
+  killParagraph(event){
+    console.log('hello world');
+  }
+
   handleChange(event) {
     this.setState({data: event.target.value});
   }
 
   handleSubmit(event) {
+    
     event.preventDefault();
     let xhr = new XMLHttpRequest();
     try
     {
-        xhr.open("GET", this.state.data, true);
-        xhr.onload = () => {
-           let response = xhr.responseText;
-           let el = document.createElement('html');
-           el.innerHTML = response;
-           let paragEl = el.getElementsByTagName('p');
-           let textArray = [];
-           for(let p in paragEl) {
-             if(paragEl[p].innerText){
-               textArray.push(paragEl[p].innerText);
-             }
-           }
-
-           this.setState({paragraphs: textArray})
-           console.dir(textArray)
-            
+      xhr.open("GET", this.state.data, true);
+      xhr.onload = () => {
+        let response = xhr.responseText;
+        let el = document.createElement('html');
+        el.innerHTML = response;
+        let paragEl = el.getElementsByTagName('p');
+        let textArray = [];
+        for(let par in paragEl) {
+          let p = paragEl[par].innerText
+          if( p && (p.includes('.')|| p.includes('!') || p.includes('?'))){
+            textArray.push(p);
+          }
+        }
+        this.setState({paragraphs: textArray})
+        console.dir(textArray)  
         }
         xhr.send();
     }
@@ -57,19 +60,32 @@ class App extends Component {
     return (
       <div className="App">
       <h1>Welcome, Please enter the URL of a web article</h1>
-        
         <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleChange} type="text"/>
           <input type="submit" value="Submit"></input>  
         </form>
-        <div className="ptags">
-          {this.state.paragraphs.map(function(name, index){
-                    return <div className="ptags__elem" key={ index }>{name}</div>;
-           })}
-        </div>
+        <Paragraphs paragraphs={this.state.paragraphs} 
+                    killParagraph={this.killParagraph}
+        />
       </div>
     );
   }
 }
 
+const Paragraphs = (props) => {
+  let parags = props.paragraphs.map((name, index) =>
+    <div className="ptags__elem" key={ index }>
+      <button className="ptags__elem__remove" onClick={() => props.killParagraph()}>
+        <i className="fas fa-times "></i>
+      </button>
+      {name}
+    </div>
+  )
+
+  return (
+    <div className="ptags">
+      {parags}
+    </div>
+  )
+}
 export default App;

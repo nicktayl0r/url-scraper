@@ -1,5 +1,24 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 20px;
   font-family: sans-serif;
+}
+
+
+
+
+
+.ptags__elem{
+  color: white;
+  background-color: black;
+  margin: 10px auto;
+  padding: 10px;
+  display: flex;
+}
+
+.ptags__elem__remove{
+  padding:10px;
+  border: 1px solid white;
+  height:100%;
+  margin-right: 10px;
 }
