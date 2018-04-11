@@ -15,8 +15,12 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  killParagraph(event){
-    console.log('hello world');
+  killParagraph = (index) => {
+    console.log(index)
+    
+    this.setState({
+      paragraphs: this.state.paragraphs.filter((_, i) => i !== index)
+    });
   }
 
   handleChange(event) {
@@ -75,7 +79,7 @@ class App extends Component {
 const Paragraphs = (props) => {
   let parags = props.paragraphs.map((name, index) =>
     <div className="ptags__elem" key={ index }>
-      <button className="ptags__elem__remove" onClick={() => props.killParagraph()}>
+      <button className="ptags__elem__remove" onClick={() => props.killParagraph(index)}>
         <i className="fas fa-times "></i>
       </button>
       {name}
