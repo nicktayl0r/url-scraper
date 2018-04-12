@@ -31,7 +31,7 @@ class App extends Component {
     
     event.preventDefault();
     let xhr = new XMLHttpRequest();
-    let url = "https://anyorigin.com/go?url="+ this.state.data;
+    let url = "https://allorigins.me/get?method=raw&url="+ this.state.data;
     try
     {
       xhr.open("GET", url, true);
