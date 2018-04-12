@@ -31,9 +31,10 @@ class App extends Component {
     
     event.preventDefault();
     let xhr = new XMLHttpRequest();
+    let url = "http://anyorigin.com/go?url="+ this.state.data;
     try
     {
-      xhr.open("GET", this.state.data, true);
+      xhr.open("GET", url, true);
       xhr.onload = () => {
         let response = xhr.responseText;
         let el = document.createElement('html');
